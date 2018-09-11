@@ -5,12 +5,13 @@ namespace OOP_RPG
 {
     public class Monster
     {
+        public int Gold { get; set; }
         public string Name { get; set; }
         public int Strength { get; set; }
         public int Defense { get; set; }
         public int OriginalHP { get; set; }
         public int CurrentHP { get; set; }
-        public Monster monster { get; set; }
+        //public Monster monster { get; set; }
 
         public Monster(string name, int strength, int defense, int originalHP, int currentHP) {
             this.Name = name;
@@ -18,9 +19,7 @@ namespace OOP_RPG
             this.Defense = defense;
             this.OriginalHP = originalHP;
             this.CurrentHP = currentHP;
+            this.Gold = 5;
         }
-
-        
-        
     }
 }
