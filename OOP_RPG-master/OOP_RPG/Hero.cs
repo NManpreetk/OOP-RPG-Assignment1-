@@ -6,6 +6,8 @@ namespace OOP_RPG
 {
     public class Hero
     {
+       List<Potion> PotionBag { get; set; }
+
         public int Gold { get; set; }
         /*This is a Constructor.
         When we create a new object from our Hero class, the instance of this class, our hero, has:
@@ -17,6 +19,7 @@ namespace OOP_RPG
         public Hero() {
             this.ArmorsBag = new List<Armor>();
             this.WeaponsBag = new List<Weapon>();
+            this.PotionBag = new List<Potion>();
             this.Strength = 10;
             this.Defense = 10;
             this.OriginalHP = 30;
@@ -33,9 +36,10 @@ namespace OOP_RPG
         public Weapon EquippedWeapon { get; set; }
         public Armor EquippedArmor { get; set; }
         
+
         public List<Armor> ArmorsBag { get; set;}
-        public List <Weapon> WeaponsBag { get; set; }
-        
+        public List<Weapon> WeaponsBag { get; set; }
+
         //These are the Methods of our Class.
         public void ShowStats() {
             Console.WriteLine("*****" + this.Name + "*****");

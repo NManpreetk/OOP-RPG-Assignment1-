@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+
 namespace OOP_RPG
 {
     public class Weapon: Item { 
