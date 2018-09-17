@@ -15,10 +15,10 @@ namespace OOP_RPG
             this.Monsters = new List<Monster>();
             this.hero = hero;
             this.game = game;
-            this.AddMonster("Squid1", 9, 8, 20, 2);
-            this.AddMonster("Squid2", 12, 7, 15, 4);
-            this.AddMonster("Squid3", 8, 5, 17, 6);
-            this.AddMonster("Squid4", 2, 9, 10, 8);
+            this.AddMonster("Squid1", 9, 20,8, 2);
+            this.AddMonster("Squid2", 12, 15, 7, 4);
+            this.AddMonster("Squid3", 8, 17,5, 6);
+            this.AddMonster("Squid4", 2, 10, 9, 8);
 
             var enemy1 = this.Monsters.Last();
             var enemy2 = this.Monsters[1];
