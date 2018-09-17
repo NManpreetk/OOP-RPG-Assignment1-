@@ -119,7 +119,7 @@ namespace OOP_RPG
             Console.WriteLine("You've been defeated! :( GAME OVER.");
             return;
         }
-        
+
     }
     
 }
