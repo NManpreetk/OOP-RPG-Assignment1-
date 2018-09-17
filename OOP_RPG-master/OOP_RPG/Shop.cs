@@ -13,12 +13,9 @@ namespace OOP_RPG
         public List<Armor> Armor { get; set; }
         public List<Weapon> Weapons { get; set; }
         public List<Potion> Potions { get; set; }
-        public string name { get; set; }
         public string OriginalValue { get; set; }
-        public int itemNumber { get; set; }
         public int i { get; set; }
         public Hero hero { get; set; }
-        public Item item { get; set; }
 
         public Shop()
         {
@@ -50,13 +47,9 @@ namespace OOP_RPG
             var input = Console.ReadLine();
             if (input == "a")
             {
-                //Console.WriteLine("1. Weapons");
-                //Console.WriteLine("2. Armor");
-                //Console.WriteLine("3. potion");
-                //this.ShowInventory();
-                this.weapons();
+                this.ShowInventory();
             }
-            else if(input == "b")
+            else if (input == "b")
             {
                 this.BuyfromUser();
             }
@@ -66,99 +59,221 @@ namespace OOP_RPG
             }
         }
 
-        public void weapons()
+        public void ShowInventory()
         {
             Console.WriteLine("1. Weapons");
             Console.WriteLine("2. Armor");
             Console.WriteLine("3. potion");
-            Console.ReadLine();
-        }
-        public void ShowInventory()
-        {
-            var counter = 1;
-            Console.WriteLine("*****SHOP FOR WEAPONS*****");
-            for (i = 0; i< this.Weapons.Count(); i++){
-                Console.WriteLine(counter + " " +this.Weapons[i].Name + " with original value of " + + this.Weapons[i].OriginalValue);
-                counter++;
-            }
-            
-            Console.WriteLine("*****SHOP FOR ARMORS*****");
-            for (i = 0; i < this.Armor.Count(); i++){
-                Console.WriteLine(counter + " " + this.Armor[i].Name + " with original value of " + +this.Armor[i].OriginalValue);
-                counter++;
-            }
-            
-            Console.WriteLine("*****SHOP FOR POTIONS*****");
-            for (i = 0; i < this.Potions.Count(); i++){
-                Console.WriteLine(counter + " " + this.Potions[i].name + " with original value of " + +this.Potions[i].OriginalValue);
-                counter++;
-            }
-
-            Console.WriteLine("Please enter number");
-            Console.WriteLine("Please enter 'R' or any key to return to menu");
-            var conversionResult = int.TryParse(Console.ReadLine(), out int result);
-            if (conversionResult)
+            var input = Console.ReadLine();
+            if (input == "1")
             {
-                Console.WriteLine("You choose" + counter);
-                this.SellFromUser(itemNumber);
+                var counter = 1;
+                Console.WriteLine("*****SHOP FOR WEAPONS*****");
+                for (i = 0; i < this.Weapons.Count(); i++)
+                {
+                    Console.WriteLine(counter + " " + this.Weapons[i].Name + " with original value of " + +this.Weapons[i].OriginalValue);
+                    counter++;
+                }
+                Console.WriteLine("Please enter number");
+                var conversionResult = int.TryParse(Console.ReadLine(), out int result);
+                if (conversionResult)
+                {
+                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
+                    this.Sell(result, input);
+                }
+                else
+                {
+                    Console.WriteLine("Enter any key return to menu");
+                    return;
+                }
             }
-            else{
-                Console.WriteLine("Enter any key return to menu");
-                return;
-            }
-
-        }
-
-        public void Sell(Item item)
-        {
-            if (hero.Gold >= item.OriginalValue)
+            else if (input == "2")
             {
-                Console.WriteLine(hero.Gold = hero.Gold - Weapons[i].OriginalValue);
+                var counter = 1;
+                Console.WriteLine("*****SHOP FOR ARMORS*****");
+                for (i = 0; i < this.Armor.Count(); i++)
+                {
+                    Console.WriteLine(counter + " " + this.Armor[i].Name + " with original value of " + +this.Armor[i].OriginalValue);
+                    counter++;
+                }
+                Console.WriteLine("Please enter number");
+                var conversionResult = int.TryParse(Console.ReadLine(), out int result);
+                if (conversionResult)
+                {
+                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
+                    this.Sell(result, input);
+                }
+                else
+                {
+                    Console.WriteLine("Enter any key return to menu");
+                    return;
+                }
+            }
+            else if (input == "3")
+            {
+                var counter = 1;
+                Console.WriteLine("*****SHOP FOR POTIONS*****");
+                for (i = 0; i < this.Potions.Count(); i++)
+                {
+                    Console.WriteLine(counter + " " + this.Potions[i].name + " with original value of " + +this.Potions[i].OriginalValue);
+                    counter++;
+                }
+                Console.WriteLine("Please enter number");
+                var conversionResult = int.TryParse(Console.ReadLine(), out int result);
+                if (conversionResult)
+                {
+                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
+                    this.Sell(result, input);
+                }
+                else
+                {
+                    Console.WriteLine("Enter any key return to menu");
+                    return;
+                }
             }
             else
             {
-                Console.WriteLine("You do not have enough money to buy weapon");
+                return;
             }
-            Console.WriteLine("hello world");
-            Console.ReadLine();
+        }
+
+        public void Sell(int result, string name)
+        {
+            var hero = new Hero();
+            if(name == "1") {
+                Console.WriteLine("Weapon is a " + Weapons[result - 1].Name + " of original value " + Weapons[result - 1].OriginalValue);
+                hero.WeaponsBag.Add(Weapons[result - 1]);
+                //hero.Gold = hero.Gold - hero.WeaponsBag[result - 1].ResellValue;
+                foreach (var item in hero.WeaponsBag)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
+            if(name == "2")
+            {
+                Console.WriteLine("Armor is a " + Armor[result - 1].Name + " of original value " + Armor[result - 1].OriginalValue);
+                hero.ArmorsBag.Add(Armor[result - 1]);
+                //hero.Gold = hero.Gold - hero.ArmorsBag[result - 1].ResellValue;
+                foreach (var item in hero.ArmorsBag)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
+            if(name == "3")
+            {
+                Console.WriteLine("Potion is a " + Potions[result - 1].name + " of original value " + Potions[result - 1].OriginalValue);
+            }
         }
 
         public void BuyfromUser()
         {
-            var counter = 1;
-            Console.WriteLine("*****RESELL WEAPONS*****");
-            for (i = 0; i < this.Weapons.Count(); i++){
-                Console.WriteLine(counter + " " + this.Weapons[i].Name + " with resell value of " +this.Weapons[i].ResellValue);
-                counter++;
+            Console.WriteLine("1. Weapons");
+            Console.WriteLine("2. Armor");
+            Console.WriteLine("3. potion");
+            var input = Console.ReadLine();
+            if (input == "1")
+            {
+                var counter = 1;
+                Console.WriteLine("*****SELL WEAPONS*****");
+                for (i = 0; i < this.Weapons.Count(); i++)
+                {
+                    Console.WriteLine(counter + " " + this.Weapons[i].Name + " with resell value of " + +this.Weapons[i].ResellValue);
+                    counter++;
+                }
+                Console.WriteLine("Please enter number");
+                var conversionResult = int.TryParse(Console.ReadLine(), out int result);
+                if (conversionResult)
+                {
+                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
+                    this.SellFromUser(result, input);
+                }
+                else
+                {
+                    Console.WriteLine("Enter any key return to menu");
+                    return;
+                }
             }
-
-            Console.WriteLine("*****RESELL ARMORS*****");
-            for (i = 0; i < this.Armor.Count(); i++){
-                Console.WriteLine(counter + " " + this.Armor[i].Name + " with resell value of " +this.Armor[i].ResellValue);
-                counter++;
+            else if (input == "2")
+            {
+                var counter = 1;
+                Console.WriteLine("*****SELL ARMORS*****");
+                for (i = 0; i < this.Armor.Count(); i++)
+                {
+                    Console.WriteLine(counter + " " + this.Armor[i].Name + " with resell value of " + +this.Armor[i].ResellValue);
+                    counter++;
+                }
+                Console.WriteLine("Please enter number");
+                var conversionResult = int.TryParse(Console.ReadLine(), out int result);
+                if (conversionResult)
+                {
+                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
+                    this.Sell(result, input);
+                }
+                else
+                {
+                    Console.WriteLine("Enter any key return to menu");
+                    return;
+                }
             }
-
-            Console.WriteLine("*****RESELL POTIONS*****");
-            for (i = 0; i < this.Potions.Count(); i++){
-                Console.WriteLine(counter + " " + this.Potions[i].name + " with resell value of " +this.Potions[i].ResellValue);
-                counter++;
+            else if (input == "3")
+            {
+                var counter = 1;
+                Console.WriteLine("*****SELL POTIONS*****");
+                for (i = 0; i < this.Potions.Count(); i++)
+                {
+                    Console.WriteLine(counter + " " + this.Potions[i].name + " with resell value of " + +this.Potions[i].ResellValue);
+                    counter++;
+                }
+                Console.WriteLine("Please enter number");
+                var conversionResult = int.TryParse(Console.ReadLine(), out int result);
+                if (conversionResult)
+                {
+                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
+                    this.Sell(result, input);
+                }
+                else
+                {
+                    Console.WriteLine("Enter any key return to menu");
+                    return;
+                }
             }
-
-            Console.WriteLine("Please enter number");
-            Console.WriteLine("Please enter 'R' or any key to return to menu");
-            var input = int.TryParse(Console.ReadLine(), out int result);
-            if (result == i){
-                this.SellFromUser(itemNumber);
-            }
-            else{
-                Console.WriteLine("Enter any key return to menu");
+            else
+            {
                 return;
             }
         }
 
-        public void SellFromUser(int itemNumber)
+        public void SellFromUser(int result, string input)
         {
-            Console.WriteLine("hello world");
+            if (input == "1")
+            {
+                var hero = new Hero();
+                
+                Console.WriteLine("Weapon is a " + Weapons[result - 1].Name + " of resell value " + Weapons[result - 1].OriginalValue);
+                hero.WeaponsBag.Remove(Weapons[result - 1]);
+                //hero.Gold = hero.Gold + hero.WeaponsBag[result - 1].ResellValue;
+                foreach (var item in hero.WeaponsBag)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
+            if (input == "2")
+            {
+                var hero = new Hero();
+                
+                Console.WriteLine("Armor is a " + Armor[result - 1].Name + " of resell value " + Armor[result - 1].OriginalValue);
+                hero.ArmorsBag.Remove(Armor[result - 1]);
+                //hero.Gold = hero.Gold + hero.ArmorsBag[result - 1].ResellValue;
+                foreach (var item in hero.ArmorsBag)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
+            if (input == "3")
+            {
+                var hero = new Hero();
+                Console.WriteLine("Potion is a " + Potions[result - 1].name + " of resell value " + Potions[result - 1].OriginalValue);
+            }
         }
     }
 }
