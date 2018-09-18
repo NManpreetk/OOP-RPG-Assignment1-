@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OOP_RPG
 {
-    class Shop
+    public class Shop
     {
-        private Game game;
+        public Game game;
 
         public List<Armor> Armor { get; set; }
         public List<Weapon> Weapons { get; set; }
@@ -17,7 +17,7 @@ namespace OOP_RPG
         public int i { get; set; }
         public Hero hero { get; set; }
 
-        public Shop()
+        public Shop(Hero hero, Game game)
         {
             Weapons = new List<Weapon> {
                 new Weapon("Sword", 3, 2, 10), new Weapon("Axe", 4, 3, 12), new Weapon("Longsword", 7, 5, 20)
@@ -30,15 +30,12 @@ namespace OOP_RPG
             Potions = new List<Potion>{
                 new Potion(5, "Healing Potion", 10, 6)
             };
-        }
 
-        public Shop(Hero hero, Game game)
-        {
             this.hero = hero;
             this.game = game;
         }
 
-        public void Menu(Hero hero, Game game)
+        public void Menu()
         {
             Console.WriteLine("Welcome to my shop! What would you like to do?");
             Console.WriteLine("a) Buy Item");
@@ -79,7 +76,7 @@ namespace OOP_RPG
                 if (conversionResult)
                 {
                     Console.WriteLine("You choose: " + Weapons[result - 1].Name);
-                    this.Sell(result, input);
+                    this.Sell(result, input, hero);
                 }
                 else
                 {
@@ -100,8 +97,8 @@ namespace OOP_RPG
                 var conversionResult = int.TryParse(Console.ReadLine(), out int result);
                 if (conversionResult)
                 {
-                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
-                    this.Sell(result, input);
+                    Console.WriteLine("You choose: " + Armor[result - 1].Name);
+                    this.Sell(result, input, hero);
                 }
                 else
                 {
@@ -122,8 +119,8 @@ namespace OOP_RPG
                 var conversionResult = int.TryParse(Console.ReadLine(), out int result);
                 if (conversionResult)
                 {
-                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
-                    this.Sell(result, input);
+                    Console.WriteLine("You choose: " + Potions[result - 1].name);
+                    this.Sell(result, input, hero);
                 }
                 else
                 {
@@ -137,13 +134,12 @@ namespace OOP_RPG
             }
         }
 
-        public void Sell(int result, string name)
+        public void Sell(int result, string name,Hero hero)
         {
-            var hero = new Hero();
             if(name == "1") {
                 Console.WriteLine("Weapon is a " + Weapons[result - 1].Name + " of original value " + Weapons[result - 1].OriginalValue);
-                hero.WeaponsBag.Add(Weapons[result - 1]);
-                //hero.Gold = hero.Gold - hero.WeaponsBag[result - 1].ResellValue;
+                //this.hero.Gold = this.hero.Gold - this.hero.WeaponsBag[result - 1].OriginalValue;
+                this.hero.WeaponsBag.Add(Weapons[result - 1]);
                 foreach (var item in hero.WeaponsBag)
                 {
                     Console.WriteLine(item.Name);
@@ -152,8 +148,8 @@ namespace OOP_RPG
             if(name == "2")
             {
                 Console.WriteLine("Armor is a " + Armor[result - 1].Name + " of original value " + Armor[result - 1].OriginalValue);
+                //this.hero.Gold = this.hero.Gold - this.hero.ArmorsBag[result - 1].OriginalValue;
                 hero.ArmorsBag.Add(Armor[result - 1]);
-                //hero.Gold = hero.Gold - hero.ArmorsBag[result - 1].ResellValue;
                 foreach (var item in hero.ArmorsBag)
                 {
                     Console.WriteLine(item.Name);
@@ -199,15 +195,15 @@ namespace OOP_RPG
                 Console.WriteLine("*****SELL ARMORS*****");
                 for (i = 0; i < this.Armor.Count(); i++)
                 {
-                    Console.WriteLine(counter + " " + this.Armor[i].Name + " with resell value of " + +this.Armor[i].ResellValue);
+                    Console.WriteLine(counter + " " + this.Armor[i].Name + " with resell value of " +this.Armor[i].ResellValue);
                     counter++;
                 }
                 Console.WriteLine("Please enter number");
                 var conversionResult = int.TryParse(Console.ReadLine(), out int result);
                 if (conversionResult)
                 {
-                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
-                    this.Sell(result, input);
+                    Console.WriteLine("You choose: " + Armor[result - 1].Name);
+                    this.Sell(result, input, hero);
                 }
                 else
                 {
@@ -221,15 +217,15 @@ namespace OOP_RPG
                 Console.WriteLine("*****SELL POTIONS*****");
                 for (i = 0; i < this.Potions.Count(); i++)
                 {
-                    Console.WriteLine(counter + " " + this.Potions[i].name + " with resell value of " + +this.Potions[i].ResellValue);
+                    Console.WriteLine(counter + " " + this.Potions[i].name + " with resell value of " +this.Potions[i].ResellValue);
                     counter++;
                 }
                 Console.WriteLine("Please enter number");
                 var conversionResult = int.TryParse(Console.ReadLine(), out int result);
                 if (conversionResult)
                 {
-                    Console.WriteLine("You choose: " + Weapons[result - 1].Name);
-                    this.Sell(result, input);
+                    Console.WriteLine("You choose: " + Potions[result - 1].name);
+                    this.Sell(result, input, hero);
                 }
                 else
                 {
@@ -247,11 +243,9 @@ namespace OOP_RPG
         {
             if (input == "1")
             {
-                var hero = new Hero();
-                
-                Console.WriteLine("Weapon is a " + Weapons[result - 1].Name + " of resell value " + Weapons[result - 1].OriginalValue);
-                hero.WeaponsBag.Remove(Weapons[result - 1]);
-                //hero.Gold = hero.Gold + hero.WeaponsBag[result - 1].ResellValue;
+                Console.WriteLine("Weapon is a " + Weapons[result - 1].Name + " of resell value " + Weapons[result - 1].ResellValue);
+                //this.hero.Gold = this.hero.Gold + this.hero.WeaponsBag[result - 1].ResellValue;
+                this.hero.WeaponsBag.Remove(Weapons[result - 1]);
                 foreach (var item in hero.WeaponsBag)
                 {
                     Console.WriteLine(item.Name);
@@ -259,11 +253,9 @@ namespace OOP_RPG
             }
             if (input == "2")
             {
-                var hero = new Hero();
-                
-                Console.WriteLine("Armor is a " + Armor[result - 1].Name + " of resell value " + Armor[result - 1].OriginalValue);
-                hero.ArmorsBag.Remove(Armor[result - 1]);
-                //hero.Gold = hero.Gold + hero.ArmorsBag[result - 1].ResellValue;
+                Console.WriteLine("Armor is a " + Armor[result - 1].Name + " of resell value " + Armor[result - 1].ResellValue);
+                //this.hero.Gold = this.hero.Gold + this.hero.ArmorsBag[result - 1].ResellValue;
+                this.hero.ArmorsBag.Remove(Armor[result - 1]);
                 foreach (var item in hero.ArmorsBag)
                 {
                     Console.WriteLine(item.Name);
@@ -271,8 +263,7 @@ namespace OOP_RPG
             }
             if (input == "3")
             {
-                var hero = new Hero();
-                Console.WriteLine("Potion is a " + Potions[result - 1].name + " of resell value " + Potions[result - 1].OriginalValue);
+                Console.WriteLine("Potion is a " + Potions[result - 1].name + " of resell value " + Potions[result - 1].ResellValue);
             }
         }
     }

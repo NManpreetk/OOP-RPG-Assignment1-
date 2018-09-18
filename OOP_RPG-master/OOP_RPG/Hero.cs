@@ -62,17 +62,106 @@ namespace OOP_RPG
             }
         }
         
-        public void EquipWeapon() {
+        public void EquipWeapon(int itemNumber) {
             if(WeaponsBag.Any()) {
-                this.EquippedWeapon = this.WeaponsBag[0];
+                if(this.EquippedArmor == null)
+                {
+                    this.EquippedWeapon = this.WeaponsBag[itemNumber];
+                    this.Strength = this.Strength + this.EquippedWeapon.Strength;
+                    this.WeaponsBag.RemoveAt(itemNumber);
+                }
+                else
+                {
+                    this.Strength = this.Strength- this.EquippedWeapon.Strength;
+                    this.WeaponsBag.Add(this.EquippedWeapon);
+                    this.EquippedWeapon = this.WeaponsBag[itemNumber];
+                    this.Strength = this.Strength + this.EquippedWeapon.Strength;
+                    this.WeaponsBag.RemoveAt(itemNumber);
+                }
             }
         }
         
-        public void EquipArmor() {
+        public void EquipArmor(int itemNumber) {
             if(ArmorsBag.Any()) {
-                this.EquippedArmor = this.ArmorsBag[0];
+                if (this.EquippedArmor == null)
+                {
+                    this.EquippedArmor = this.ArmorsBag[itemNumber];
+                    this.Strength = this.Strength + this.EquippedArmor.Defense;
+                    this.ArmorsBag.RemoveAt(itemNumber);
+                }
+                else
+                {
+                    this.Strength = this.Strength - this.EquippedArmor.Defense;
+                    this.ArmorsBag.Add(this.EquippedArmor);
+                    this.EquippedArmor = this.ArmorsBag[itemNumber];
+                    this.Strength = this.Strength + this.EquippedArmor.Defense;
+                    this.ArmorsBag.RemoveAt(itemNumber);
+                }
             }
         }
-        
+
+
+        public void Equip()
+        {
+            Console.WriteLine("Please select an item which you want to equip");
+            Console.WriteLine("1.Equip Weapons");
+            Console.WriteLine("2.Equip Armor");
+            Console.WriteLine("Please enter number");
+            var conversionResult = int.TryParse(Console.ReadLine(), out int result);
+            if (result == 1)
+            {
+                if (this.WeaponsBag.Count != 0)
+                {
+                    foreach (var item in this.WeaponsBag)
+                    {
+                        Console.WriteLine(this.WeaponsBag.Contains(item) + item.Name + " with" + item.Strength + " Strength ");
+                    }
+                    var selection = Console.ReadLine();
+                    var s = Convert.ToInt32(selection);
+                    if (selection == "0")
+                    {
+                        this.EquipWeapon(s);
+                    }
+                    if (selection == "1")
+                    {
+                        this.EquipWeapon(s);
+                    }
+                    if (selection == "2")
+                    {
+                        this.EquipWeapon(s);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("there are no weapons!");
+                }
+            }
+
+            else if (result == 2)
+            {
+                if (this.ArmorsBag.Count != 0)
+                {
+                    foreach (var item in this.ArmorsBag)
+                    {
+                        Console.WriteLine(this.ArmorsBag.Contains(item) + item.Name + " with" + item.Defense + " Strength ");
+                    }
+                    var selection = Console.ReadLine();
+                    var s = Convert.ToInt32(selection);
+                    if (selection == "0")
+                    {
+                        this.EquipArmor(s);
+                    }
+                    if (selection == "1")
+                    {
+                        this.EquipArmor(s);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("there are no armors!");
+                }
+            }
+        }
+
     }
 }
